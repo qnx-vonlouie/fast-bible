@@ -1,9 +1,18 @@
 import requests
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
+from fastapi.middleware.cors import CORSMiddleware
+
+PROVIDER = "https://bible-api.com"
 
 app = FastAPI()
-PROVIDER = "https://bible-api.com"
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/")
@@ -22,7 +31,7 @@ def read_verse(book: str, chapter: int, verse: str):
             <title>Fast Bible</title>
         </head>
         <body>
-            <h1>{verse}</h1>
+            <h2>{verse}</h2>
         </body>
     </html>
     """.format(verse=data.get("text"))
