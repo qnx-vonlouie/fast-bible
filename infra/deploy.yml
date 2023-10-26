@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fast-bible
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fast-bible
+  template:
+    metadata:
+      labels:
+        app: fast-bible
+    spec:
+      containers:
+        - name: fast-bible
+          image: fast-bible:1.0.2
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8000
+              name: web
+
+# https://sweetcode.io/how-to-use-local-docker-images-in-kubernetes/
